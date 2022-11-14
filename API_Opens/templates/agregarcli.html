@@ -1,0 +1,27 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<link rel="stylesheet" href="{% static 'css/style.css'%}" />
+<br><br><br>
+<div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="mb-4">Agregar</h2>
+                <form action="/agregarcli/" method="POST" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    {{form | crispy}}
+                    <div class="d-flex justify-content-end mt-2">
+                        
+                        <button href="" type="reset" class="btn btn-secondary mr-2">Limpiar</button>
+                        <button type="submit" class="btn btn-success">Agregar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

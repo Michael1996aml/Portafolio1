@@ -1,0 +1,45 @@
+{% extends 'base.html'%} 
+{% load static %}
+
+{% block content %}
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+/>
+<link rel="stylesheet" href="{% static 'css/style.css'%}" />
+<div class="contenedor2">
+
+  <div class="head_config_usuario">
+    <div class="titulo"></div>
+        <h2>Configuracion</h2><h4 class="text-info">Clientes</h4>
+    <div class="botones mt-5">
+        <a href="{% url 'agregarcli' %}" class="btn btn-success">Agregar +</a>  
+    </div>
+</div>
+<div class="tabla table-responsive">
+    <table class="table table-hover ">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>Opciones</th>
+        </tr>
+        {% for c in user %}
+        <tr>
+            <td>{{c.username}}</td>
+            <td>{{c.first_name}}{{c.last_name}}</td>
+            <td>{{c.email}}</td>
+            <td>{{c.is_active}}</td>
+            <td>
+                <a href="{% url 'modificarcli' c.username %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'eliminarcli' c.username %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+      </table>
+</div>
+</div>
+
+{% endblock %}

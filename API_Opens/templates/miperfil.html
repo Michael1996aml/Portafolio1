@@ -1,0 +1,39 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'css/perfil.css'%}" />
+<section class="seccion-perfil-usuario">
+    <div class="perfil-usuario-header">
+        <div class="perfil-usuario-portada">
+            <div class="perfil-usuario-avatar">
+                <img src="{{user.perfil.image.url}}" alt="img-avatar">
+
+            </div>
+            <!-- <button type="button" class="boton-portada">
+                <i class="far fa-image"></i> Cambiar fondo
+            </button> -->
+        </div>
+    </div>
+    <div class="perfil-usuario-body">
+        <div class="perfil-usuario-bio">
+            <h3 class="titulo">{{user.perfil.nombre}} {{user.perfil.apellido}}</h3>
+            <a href="{% url 'modificarperfil' user.id %}">Editar perfil</a>
+
+        </div>
+        <div class="perfil-usuario-footer">
+            <h3>Datos Personales</h3>
+            <br>
+            <ul class="lista-datos">
+                <li><i class="icono fas fa-user-check"></i> Usuario: {{user.perfil.user}}</li>
+                <li><i class="icono fas fa-phone-alt"></i> Fono: {{user.perfil.fono}}</li>
+                <li><i class="icono fas fa-calendar-alt"></i> Fecha nacimiento: {{user.perfil.fecha_nac}}</li>
+                <li><i class="icono fas fa-map-signs"></i> Direccion de usuario: {{user.perfil.direccion}}</li>
+                <li><i class="icono fas fa-email"></i>Email: {{user.perfil.email}}</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
