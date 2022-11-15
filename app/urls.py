@@ -52,6 +52,9 @@ urlpatterns = [
     #!PERFIL
     path('miperfil/<str:username>/',views.miperfil, name='miperfil'),
     path('modificarperfil/<str:username>/',views.modificarperfil, name='modificarperfil'),
+    #!CLIENTE
+    path('hola/',views.hola, name='hola'),
+    path('cargarDoc/',views.uploadFile, name='cargarDoc'),
 
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

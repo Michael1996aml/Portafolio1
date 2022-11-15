@@ -17,7 +17,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg p-3">
+<nav class="navbar navbar-expand-lg p-3">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">RALE</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -29,15 +29,14 @@
           {% if user.is_anonymous %}
           <a class="nav-link" href="/signup">Registrarse</a>
           {% else %}
-            <a class="nav-link active" aria-current="page" href="/ahome/">Home</a>
+            <a class="nav-link active" aria-current="page" href="/hola/">Homeeeee</a>
             <a class="nav-link" href="/signout">Logout</a>
           {% endif %}
-          
         </div>
       </div>
     </div>
   </nav>
-  {% block content %} {% endblock %}
+{% block content %} {% endblock %}
 </body>
 <br>
 <br>

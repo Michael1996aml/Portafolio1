@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 # Create your models here.
 
-#!tiposusuarios
 
 
 class Perfil(models.Model):
@@ -100,8 +99,11 @@ class Solicitud(models.Model):
 		return self.descripcion
 
 class Documento(models.Model):
-	fecha_documento = models.DateField()
-	solicitud = models.ForeignKey('Solicitud' , on_delete = models.SET_NULL, null = True)
+	titulo = models.CharField(max_length = 200)
+	documento = models.FileField(upload_to = "Uploaded Files/")
+	fecha_documento = models.DateTimeField(auto_now = True)
+	# fecha_documento = models.DateField()
+	# solicitud = models.ForeignKey('Solicitud' , on_delete = models.SET_NULL, null = True)
 
 	class Meta:
 		db_table = 'Documento'

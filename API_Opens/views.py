@@ -1,20 +1,21 @@
+import re
 from locale import currency
 from re import A
-import re
-from rest_framework import serializers, viewsets, views
-from django.shortcuts import render, redirect, get_object_or_404
+
 from django.contrib import messages
-from django.contrib.auth.models import User, Group
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import Group, User
 from django.db import IntegrityError
+from django.shortcuts import get_object_or_404, redirect, render
+from rest_framework import serializers, views, viewsets
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .forms import agregarcliFrom, perfilForm, registrarForm
 from .models import *
 from .serializers import *
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from django.shortcuts import render
-from .forms import agregarcliFrom, registrarForm, perfilForm
 
 # Create your views here.
 
@@ -64,7 +65,11 @@ def signin(request):
             return render(request, 'signin.html', {"form": AuthenticationForm, "error": "Username or password is incorrect."})
 
         login(request, user)
-        return redirect(to='ahome')
+        user = request.user
+        if user.groups.filter(name='cliente').exists():
+            return redirect(to='hola')
+        else:
+            return redirect(to='ahome')
 
 
 def signup(request):
@@ -94,13 +99,13 @@ def signup(request):
 @login_required
 def signout(request):
     logout(request)
-    return redirect('ahome')
+    return redirect(to='signin')
 
 
 @login_required
 def ahome(request):
     clientes = Cliente.objects.filter(user=request.user)
-    user = User.objects.filter(username=request.user)
+    user = User.objects.all()
     data = {
         'user':user
         # 'clientes': clientes
@@ -180,7 +185,11 @@ def modificarperfil(request,username=None):
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Perfil modificado Correctamente")
-            return redirect(to='ahome')
+            user = request.user
+            if user.groups.filter(name='cliente').exists():
+                return redirect(to='hola')
+            else:
+                return redirect(to='ahome')
         data['form'] = formulario
     return render(request, 'modificarperfil.html',data)
 
@@ -202,3 +211,28 @@ def modificarcli(request, username):
         data['form'] = formulario
 
     return render(request, 'modificarcli.html', data)
+
+
+def hola(request):
+    return render(request, 'hola.html')
+
+
+def uploadFile(request):
+    if request.method == "POST":
+        # Obtener los datos del formulario
+        titulo = request.POST["fileTitle"]
+        documento = request.FILES["uploadedFile"]
+        # Guardar la información en la base de datos.
+        documento = Documento(
+            titulo = titulo,
+            documento = documento
+        )
+        documento.save()
+
+    documents = Documento.objects.all()
+    # user = User.objects.all()
+    data = {
+        'documents':documents
+        # 'clientes': clientes
+    }
+    return render(request, "cargarDoc.html", data)
