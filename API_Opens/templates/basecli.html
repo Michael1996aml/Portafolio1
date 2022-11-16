@@ -17,20 +17,22 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg p-3">
+<nav class="navbar navbar-expand-lg p-3 text-right">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">RALE</a>
+      <h6 class="text-white">{{user.username}}</h6>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav text-center">
+        <div class="navbar-nav text-center m-auto">
           {% if user.is_anonymous %}
           <a class="nav-link" href="/signup">Registrarse</a>
           {% else %}
-            <a class="nav-link active" aria-current="page" href="/hola/">Homeeeee</a>
-            <a class="nav-link" href="/signout">Logout</a>
+            <a class="nav-link" aria-current="page" href="/hola/">Homeeeee</a>
+            <a class="nav-link" href="{% url 'modificarperfil' user.id %}">Editar perfil</a>
+            <a class="nav-link" href="/signout/">Logout</a>
           {% endif %}
         </div>
       </div>

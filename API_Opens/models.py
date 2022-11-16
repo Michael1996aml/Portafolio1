@@ -25,6 +25,8 @@ def crearPerfil(sender, instance, created, **kwargs):
 		Perfil.objects.create(user=instance)
 post_save.connect(crearPerfil, sender=User)
 
+
+
 class Email(models.Model):
 	nombre = models.CharField(max_length = 200)
 	fecha = models.CharField(max_length = 200)
@@ -52,13 +54,18 @@ class Cliente(models.Model):
 	apellido_cliente = models.CharField(max_length = 200)
 	fono_cliente = models.CharField(max_length = 200)
 	direccion_cliente = models.CharField(max_length = 200)
-	user = models.ForeignKey(User, on_delete = models.CASCADE)
+	user= models.OneToOneField(User, on_delete= models.CASCADE)
 
 	class Meta:
 		db_table = 'Cliente'
 
 	def __str__(self):
-		return self.nombre_cliente
+		return f'Cliente de {self.user.username}'
+
+def createCliente(sender,instance, created, **kwargs):
+	if created:
+		Cliente.objects.create(user=instance)
+post_save.connect(createCliente, sender=User)
 
 class Bitacora_usuario(models.Model):
 	fecha = models.DateField()
@@ -108,8 +115,7 @@ class Documento(models.Model):
 	class Meta:
 		db_table = 'Documento'
 
-	def __str__(self):
-		return self.fecha_documento
+	
 
 class Bitacora_solicitud(models.Model):
 	fecha_solicitud = models.DateField()

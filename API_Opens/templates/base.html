@@ -27,10 +27,11 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav text-center">
           {% if user.is_anonymous %}
-          <a class="nav-link" href="/signup">Registrarse</a>
+          <a class="nav-link" href="/signup/">Registrarse</a>
           {% else %}
             <a class="nav-link active" aria-current="page" href="/ahome/">Home</a>
-            <a class="nav-link" href="/signout">Logout</a>
+            <a href="{% url 'modificarperfil' user.username %}">Editar perfil</a>
+            <a class="nav-link" href="/signout/">Logout</a>
           {% endif %}
           
         </div>

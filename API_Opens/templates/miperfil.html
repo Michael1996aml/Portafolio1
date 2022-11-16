@@ -9,7 +9,6 @@
         <div class="perfil-usuario-portada">
             <div class="perfil-usuario-avatar">
                 <img src="{{user.perfil.image.url}}" alt="img-avatar">
-
             </div>
             <!-- <button type="button" class="boton-portada">
                 <i class="far fa-image"></i> Cambiar fondo
@@ -18,19 +17,18 @@
     </div>
     <div class="perfil-usuario-body">
         <div class="perfil-usuario-bio">
-            <h3 class="titulo">{{user.perfil.nombre}} {{user.perfil.apellido}}</h3>
-            <a href="{% url 'modificarperfil' user.id %}">Editar perfil</a>
-
+            <h3 class="titulo">{{user.cliente.nombre_cliente}} {{user.cliente.apellido_cliente}}</h3>
+            
         </div>
         <div class="perfil-usuario-footer">
             <h3>Datos Personales</h3>
             <br>
             <ul class="lista-datos">
-                <li><i class="icono fas fa-user-check"></i> Usuario: {{user.perfil.user}}</li>
-                <li><i class="icono fas fa-phone-alt"></i> Fono: {{user.perfil.fono}}</li>
+                <li><i class="icono fas fa-user-check"></i>Usuario: {{user.cliente.user}}</li>
+                <li><i class="icono fas fa-phone-alt"></i> Fono: {{user.cliente.fono_cliente}}</li>
                 <li><i class="icono fas fa-calendar-alt"></i> Fecha nacimiento: {{user.perfil.fecha_nac}}</li>
-                <li><i class="icono fas fa-map-signs"></i> Direccion de usuario: {{user.perfil.direccion}}</li>
-                <li><i class="icono fas fa-email"></i>Email: {{user.perfil.email}}</li>
+                <li><i class="icono fas fa-map-signs"></i> Direccion de usuario: {{user.cliente.direccion_cliente}}</li>
+                <li><i class="icono fas fa-user-chart"></i>Email: {{user.email}}</li>
             </ul>
         </div>
     </div>

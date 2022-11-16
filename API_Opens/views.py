@@ -89,7 +89,11 @@ def signup(request):
                 user.groups.add(group)
                 user.save()
                 login(request, user)
-                return redirect('ahome')
+                user = request.user
+                if user.groups.filter(name='cliente').exists():
+                    return redirect(to='hola')
+                else:
+                    return redirect(to='ahome')
             except IntegrityError:
                 return render(request, 'signup.html', {"form": registrarForm, "error": "Usuario ya existe."})
 
@@ -104,55 +108,13 @@ def signout(request):
 
 @login_required
 def ahome(request):
-    clientes = Cliente.objects.filter(user=request.user)
+    # clientes = Cliente.objects.filter(user=request.user)
     user = User.objects.all()
     data = {
         'user':user
         # 'clientes': clientes
     }
     return render(request, 'ahome.html', data)
-
-
-@login_required
-def agregarcli(request):
-    if request.method == 'GET':
-        return render(request, 'agregarcli.html', {
-            'form': registrarForm
-        })
-    else:
-        try:
-            form = registrarForm(request.POST)
-            nuevocli = form.save(commit=False)
-            nuevocli.user = request.user
-            nuevocli.save()
-            messages.success(request, "Cliente Agregado")
-            return redirect('ahome')
-        except ValueError:
-            return render(request, 'gregarcli.html', {
-                'form': registrarForm,
-                'error': 'Por favor ingrese datos valida'
-            })
-
-
-# @login_required
-# def modificarcli(request, id):
-#     cliente = get_object_or_404(Cliente, id=id)
-
-#     data = {
-#         'form': agregarcliFrom(instance=cliente)
-#     }
-
-#     if request.method == 'POST':
-#         formulario = agregarcliFrom(
-#             data=request.POST, instance=cliente, files=request.FILES)
-#         if formulario.is_valid():
-#             formulario.save()
-#             messages.success(request, "Cliente modificado Correctamente")
-#             return redirect(to='ahome')
-#         data['form'] = formulario
-
-#     return render(request, 'modificarcli.html', data)
-
 
 
 @login_required
@@ -163,6 +125,17 @@ def eliminarcli(request, username):
     return redirect(to='ahome')
 
 
+@login_required
+def agregarcli(request, username=None):
+    current_user = request.user
+    if username and username != current_user.username:
+        user = Cliente.objects.get(user=username)
+    else:
+        user = current_user
+    return render(request, 'agregarcli.html', {'user': user})
+
+
+@login_required
 def miperfil(request, username=None):
     current_user = request.user
     if username and username != current_user.username:
@@ -172,16 +145,17 @@ def miperfil(request, username=None):
     return render(request, 'miperfil.html', {'user': user})
 
 
+@login_required
 def modificarperfil(request,username=None):
-    perfil = get_object_or_404(Perfil, user=username)
+    cliente = get_object_or_404(Cliente, user=username)
 
     data = {
-        'form': perfilForm(instance=perfil)
+        'form': agregarcliFrom(instance=cliente)
     }
 
     if request.method == 'POST':
-        formulario = perfilForm(
-            data=request.POST, instance=perfil, files=request.FILES)
+        formulario = agregarcliFrom(
+            data=request.POST, instance=cliente, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Perfil modificado Correctamente")
@@ -194,7 +168,7 @@ def modificarperfil(request,username=None):
     return render(request, 'modificarperfil.html',data)
 
 @login_required
-def modificarcli(request, username):
+def modificarusuario(request, username):
     user = get_object_or_404(User, username=username)
 
     data = {
@@ -236,3 +210,7 @@ def uploadFile(request):
         # 'clientes': clientes
     }
     return render(request, "cargarDoc.html", data)
+
+
+def documentoscli(request):
+    return render(request, 'documentoscli.html')

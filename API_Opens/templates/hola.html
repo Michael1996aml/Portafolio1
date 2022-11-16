@@ -10,6 +10,7 @@
                 <div class="">
                     <h5 class="mt-5">A continuacion, presione un boton que lo direccionarara hacia su destino</h5>
                     <br><br><br><br>
+                    <a href="{% url 'agregarcli' user.id %}" class="btn btn-primary">cliente</a>
                     <a href="{% url 'cargarDoc' %}" class="btn btn-primary">Cargar Documentos</a>
                     <a href="{% url 'miperfil' user.username %}" class="btn btn-warning">Mi Perfil</a>
                 </div>

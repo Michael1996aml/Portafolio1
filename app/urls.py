@@ -46,8 +46,8 @@ urlpatterns = [
 
     #!ABOGADO
     path('ahome/',views.ahome, name='ahome'),
-    path('agregarcli/',views.agregarcli, name='agregarcli'),
-    path('modificarcli/<str:username>/',views.modificarcli, name='modificarcli'),
+    path('agregarcli/<str:username>/',views.agregarcli, name='agregarcli'),
+   #  path('modificarcli/<str:username>/',views.modificarcli, name='modificarcli'),
     path('eliminarcli/<str:username>/',views.eliminarcli, name='eliminarcli'),
     #!PERFIL
     path('miperfil/<str:username>/',views.miperfil, name='miperfil'),

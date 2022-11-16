@@ -1,3 +1,6 @@
+{% extends 'basecli.html'%}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -6,57 +9,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Django File Upload</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-        * {
-            font-family: "Roboto";
-        }
-
-        body {
-            background-color: #F5F5F5;
-        }
-
-        form {
-            background-color: #FFFFFF;
-            padding: 25px;
-        }
-
-        table {
-            width: 100%; 
-            text-align: center;
-            margin-top: 25px;
-            padding: 25px;
-            background-color: #FFFFFF;
-        }
-
-        table tr td {
-            padding-top: 15px;            
-        }
-    </style>
 </head>
-<body>
-    <form action="{% url 'cargarDoc' %}" method="POST" enctype="multipart/form-data">
-        <input type="text" name="fileTitle" placeholder="Enter a title">
-        <input type="file" name="uploadedFile">
-        {% csrf_token %}
-        <input type="submit" value="Upload">
-    </form>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>File Path</th>
-            <th>Upload Date & Time</th>
-        </tr>
-        {% for file in documents %}
-            <tr>
-                <td>{{ file.id }}</td>
-                <td>{{ file.titulo }}</td>
-                <td>{{ file.documento.url }}</td>
-                <td>{{ file.fecha_documento }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-</body>
+<link rel="stylesheet" href="{% static 'css/style.css'%}" />
+<br><br><br>
+<div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body table-responsive">
+                <h2 class="mb-4">Editar Cliente</h2>
+                <form action="" method="POST" enctype="multipart/form-data" class="forr" >
+                    <form action="{% url 'cargarDoc' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input class="input-group-text mb-2" type="text" name="fileTitle" placeholder="Nombre del documento">
+                        
+                        <input class="form-control mb-2" type="file" name="uploadedFile">
+                        
+                        <input class="btn btn-danger mb-2" type="submit" value="Upload">
+                    </form>
+                    <table class="table table-hover table-sm">
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>File Path</th>
+                            <th>Upload Date & Time</th>
+                        </tr>
+                        {% for file in documents %}
+                            <tr>
+                                <td>{{ file.id }}</td>
+                                <td>{{ file.titulo }}</td>
+                                <td>{{ file.documento.url }}</td>
+                                <td>{{ file.fecha_documento }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <div class="d-flex justify-content-end mt-2">
+                        <button type="submit" class="btn btn-success">Editar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 </html>
+{% endblock %}
