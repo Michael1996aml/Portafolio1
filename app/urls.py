@@ -42,20 +42,23 @@ urlpatterns = [
     #! LOGEO
     path('',views.signin, name='signin'), 
     path('signup/',views.signup, name='signup'),
+    path('signup2/',views.signup2, name='signup2'),
     path('signout/',views.signout, name='signout'),
-
     #!ABOGADO
     path('ahome/',views.ahome, name='ahome'),
-    path('agregarcli/<str:username>/',views.agregarcli, name='agregarcli'),
+   #  path('agregarcli/<str:username>/',views.agregarcli, name='agregarcli'),
    #  path('modificarcli/<str:username>/',views.modificarcli, name='modificarcli'),
-    path('eliminarcli/<str:username>/',views.eliminarcli, name='eliminarcli'),
+   #  path('eliminarcli/<str:username>/',views.eliminarcli, name='eliminarcli'),
     #!PERFIL
     path('miperfil/<str:username>/',views.miperfil, name='miperfil'),
-    path('modificarperfil/<str:username>/',views.modificarperfil, name='modificarperfil'),
+    path('perfilcli/<str:username>/',views.perfilcli, name='perfilcli'),
+    path('modificarperfilc/',views.modificarcliente, name='modificarcliente'),
+    path('modificarperfila/',views.modificarabogado, name='modificarabogado'),
     #!CLIENTE
     path('hola/',views.hola, name='hola'),
+   #!Documentos
     path('cargarDoc/',views.uploadFile, name='cargarDoc'),
-
+    path('eliminardoc/',views.eliminardoc, name='eliminardoc'),
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

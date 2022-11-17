@@ -20,11 +20,6 @@ class Perfil(models.Model):
 	def __str__(self):
 		return f'Perfil de {self.user.username}'
 
-def crearPerfil(sender, instance, created, **kwargs):
-	if created:
-		Perfil.objects.create(user=instance)
-post_save.connect(crearPerfil, sender=User)
-
 
 
 class Email(models.Model):
@@ -62,9 +57,10 @@ class Cliente(models.Model):
 	def __str__(self):
 		return f'Cliente de {self.user.username}'
 
-def createCliente(sender,instance, created, **kwargs):
-	if created:
-		Cliente.objects.create(user=instance)
+def createCliente(sender,instance, created, **kwargs,):
+		if created:
+			Cliente.objects.create(user=instance)
+			Abogado.objects.create(user=instance)
 post_save.connect(createCliente, sender=User)
 
 class Bitacora_usuario(models.Model):
@@ -84,13 +80,14 @@ class Abogado(models.Model):
 	fono_abogado = models.CharField(max_length = 200)
 	direccion_abogado = models.CharField(max_length = 200)
 	email_abogado = models.CharField(max_length = 200)
-	usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE )
+	user = models.OneToOneField(User, on_delete= models.CASCADE)
 
 	class Meta:
 		db_table = 'Abogado'
 
 	def __str__(self):
-		return self.nombre_abogado
+		return f'Abogado de {self.user.username}'
+
 
 class Solicitud(models.Model):
 	descripcion= models.CharField(max_length = 200)
@@ -109,6 +106,7 @@ class Documento(models.Model):
 	titulo = models.CharField(max_length = 200)
 	documento = models.FileField(upload_to = "Uploaded Files/")
 	fecha_documento = models.DateTimeField(auto_now = True)
+	user= models.ForeignKey(User, on_delete=models.CASCADE)
 	# fecha_documento = models.DateField()
 	# solicitud = models.ForeignKey('Solicitud' , on_delete = models.SET_NULL, null = True)
 

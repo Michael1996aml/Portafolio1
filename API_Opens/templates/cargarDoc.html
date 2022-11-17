@@ -21,7 +21,7 @@
                 <form action="" method="POST" enctype="multipart/form-data" class="forr" >
                     <form action="{% url 'cargarDoc' %}" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <input class="input-group-text mb-2" type="text" name="fileTitle" placeholder="Nombre del documento">
+                        <input class="input-group-text mb-2" type="text" name="fileTitle" placeholder="Nombre del documento" required>
                         
                         <input class="form-control mb-2" type="file" name="uploadedFile">
                         
@@ -30,16 +30,17 @@
                     <table class="table table-hover table-sm">
                         <tr>
                             <th>ID</th>
-                            <th>Title</th>
-                            <th>File Path</th>
-                            <th>Upload Date & Time</th>
+                            <th>Titulo</th>
+                            <th>Fecha y Hora</th>
                         </tr>
                         {% for file in documents %}
                             <tr>
                                 <td>{{ file.id }}</td>
                                 <td>{{ file.titulo }}</td>
-                                <td>{{ file.documento.url }}</td>
                                 <td>{{ file.fecha_documento }}</td>
+                                <td>
+                                    <a href="{% url 'eliminardoc' file.id %}" class="btn btn-danger btn-sm">Perfil</a>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>

@@ -20,17 +20,19 @@ href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
         <tr>
             <th>Usuario</th>
             <th>Nombre Completo</th>
+            <th>Fono</th>
+            <th>Direccion</th>
             <th>Email</th>
-            <th>Activo</th>
         </tr>
-        {% for c in user %}
+        {% for c in clientes %}
         <tr>
             <td>{{c.username}}</td>
-            <td>{{c.first_name}}{{c.last_name}}</td>
+            <td>{{c.cliente.nombre_cliente}} {{c.cliente.apellido_cliente}}</td>
+            <td>{{c.cliente.fono_cliente}}</td>
+            <td>{{c.cliente.direccion_cliente}}</td>
             <td>{{c.email}}</td>
-            <td>{{c.is_active}}</td>
             <td>
-                <a href="{% url 'miperfil' c.username %}" class="btn btn-danger btn-sm">Perfil</a>
+                <a href="{% url 'perfilcli' c.username %}" class="btn btn-warning">Mi Perfil</a>
             </td>
         </tr>
         {% endfor %}
