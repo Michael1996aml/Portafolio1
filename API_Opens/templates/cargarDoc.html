@@ -15,9 +15,10 @@
 <br><br><br>
 <div class="row">
     <div class="col-12 col-md-6 offset-md-3">
-        <div class="card">
+        <div class="card p-2">
             <div class="card-body table-responsive">
-                <h2 class="mb-4">Editar Cliente</h2>
+                <h2 class="mb-4">Documentos</h2>
+                <hr>
                 <form action="" method="POST" enctype="multipart/form-data" class="forr" >
                     <form action="{% url 'cargarDoc' %}" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -25,28 +26,31 @@
                         
                         <input class="form-control mb-2" type="file" name="uploadedFile">
                         
+                    <div class="d-flex justify-content-end mt-2">
                         <input class="btn btn-danger mb-2" type="submit" value="Upload">
+                    </div>
                     </form>
+                    <br>
+                    <br>
+                    <br>
+                    <h5>Documentos Cargados</h5>
                     <table class="table table-hover table-sm">
                         <tr>
-                            <th>ID</th>
-                            <th>Titulo</th>
+                            <th>Nombre</th>
                             <th>Fecha y Hora</th>
+                            <th>Opciones</th>
                         </tr>
                         {% for file in documents %}
                             <tr>
-                                <td>{{ file.id }}</td>
                                 <td>{{ file.titulo }}</td>
                                 <td>{{ file.fecha_documento }}</td>
                                 <td>
-                                    <a href="{% url 'eliminardoc' file.id %}" class="btn btn-danger btn-sm">Perfil</a>
+                                    <a href="{{ file.documento.url}}" class="btn btn-warning btn-sm" download >Descargar</a>
+                                    <a href="{% url 'eliminardoc' file.id%}" class="btn btn-danger btn-sm">Eliminar</a>
                                 </td>
                             </tr>
                         {% endfor %}
                     </table>
-                    <div class="d-flex justify-content-end mt-2">
-                        <button type="submit" class="btn btn-success">Editar</button>
-                    </div>
                 </form>
             </div>
         </div>

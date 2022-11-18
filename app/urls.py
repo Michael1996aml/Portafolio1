@@ -58,7 +58,8 @@ urlpatterns = [
     path('hola/',views.hola, name='hola'),
    #!Documentos
     path('cargarDoc/',views.uploadFile, name='cargarDoc'),
-    path('eliminardoc/',views.eliminardoc, name='eliminardoc'),
+    path('eliminardoc/<int:id>',views.eliminardoc, name='eliminardoc'),
+    path('documentoscli/<str:username>',views.documentoscli, name='documentoscli'),
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

@@ -138,7 +138,7 @@ body{
 .fondo-form {
   display: flex;
   justify-content: center;
-  background: url(https://www.xtrafondos.com/wallpapers/montanas-con-nieve-en-el-bosque-3934.jpg);
+  background: url('.static/img/fondo.jpg');
   background-size: cover;
   align-items: center;
   height: 100vh;
@@ -299,4 +299,3 @@ body{
   background-color: #00ABB3;
 }
 
-/*! PERFIL */

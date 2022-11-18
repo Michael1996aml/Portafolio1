@@ -145,15 +145,7 @@ def ahome(request):
     return render(request, 'ahome.html', data)
 
 
-# @login_required
-# def eliminarcli(request, username):
-#     user = get_object_or_404(User, username=username)
-#     user.delete()
-#     messages.success(request, "Cliente eliminado correctamente")
-#     user = request.user
-#     if user.groups.filter(name='cliente').exists():
-#             return redirect(to='hola')
-#     return redirect(to='ahome')
+
 
 
 # @login_required
@@ -244,37 +236,47 @@ def hola(request):
 
 @login_required
 def uploadFile(request):
-    if request.method == "GET":
-        return render(request, "cargarDoc.html")
-    else:
-        # Obtener los datos del formulario
+    documents = Documento.objects.filter(user=request.user)
+    data = {
+        'documents':documents
+    }
+    if request.method =='POST':
         titulo = request.POST["fileTitle"]
         documento = request.FILES["uploadedFile"]
-        # Guardar la información en la base de datos.
         documento = Documento(
             titulo = titulo,
             documento = documento
         )
         documento.user =request.user
         documento.save()
-    documents = Documento.objects.filter(user=request.user)
-    data = {
-        'documents':documents
-    }
-
-    user = request.user
-    if user.groups.filter(name='cliente').exists():
-            return render(request, "cargarDoc.html", data)
-
+        user = request.user
+        if user.groups.filter(name='abogado').exists():
+            return redirect(to='signin')
+        return render(request, "cargarDoc.html", data)
+    return render(request, "cargarDoc.html",data)
+    
 
 @login_required
-def documentoscli(request):
-    user = request.user
-    if user.groups.filter(name='cliente').exists():
-        return render(request, 'documentoscli.html')
-
 def eliminardoc(request,id):
-    doc = get_object_or_404(Documento, pk=id, user=request.user)
-    if request.method == 'POST':
-        doc.delete()
-        return redirect(to='uploadFile')
+    doc = get_object_or_404(Documento, id=id)
+    doc.delete()
+    messages.success(request, "Documento eliminado correctamente")
+    return redirect(to='cargarDoc')
+
+
+# @login_required
+# def documentoscli(request):
+#     user = request.user
+#     if user.groups.filter(name='cliente').exists():
+#         return render(request, 'documentoscli.html')
+
+def documentoscli(request, username):
+    current_user = request.user
+    if username and username != current_user.username:
+        user = Documento.objects.get(user=username)
+        print(user)
+    else:
+        user = current_user
+    return render(request, 'documentoscli.html', {'user': user})
+
+    

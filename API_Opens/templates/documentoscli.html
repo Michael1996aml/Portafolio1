@@ -1,0 +1,30 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<br><br><br>
+<div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="card">
+            <br>
+            <div class="card-body">
+                <h4>Documentos Cargados</h4>
+                <br>
+                <table class="table table-hover table-sm">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Fecha y Hora</th>
+                        <th>Opciones</th>
+                    </tr>
+                        <tr>
+                            <td>{{ user.titulo }}</td>
+                            <td>{{ user.fecha_documento }}</td>
+                            <td>
+                                <a href="{{ user.documento.url}}" class="btn btn-warning btn-sm" download >Descargar</a>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
