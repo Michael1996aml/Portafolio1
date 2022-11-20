@@ -6,22 +6,6 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 # Create your models here.
 
-
-
-class Perfil(models.Model):
-	user= models.OneToOneField(User, on_delete= models.CASCADE)
-	nombre = models.CharField(max_length = 200, null=True)
-	apellido = models.CharField(max_length = 200, null=True)
-	direccion = models.CharField(max_length = 200, null=True)
-	email = models.CharField(max_length = 200, null=True)
-	fono = models.CharField(max_length = 20, null=True)
-	fecha_nac = models.DateField(null=True)
-	image= models.ImageField(default='foto.png')
-	def __str__(self):
-		return f'Perfil de {self.user.username}'
-
-
-
 class Email(models.Model):
 	nombre = models.CharField(max_length = 200)
 	fecha = models.CharField(max_length = 200)
@@ -113,6 +97,8 @@ class Documento(models.Model):
 	class Meta:
 		db_table = 'Documento'
 
+	def __str__(self):
+		return f'Documento de {self.user.username}'
 	
 
 class Bitacora_solicitud(models.Model):

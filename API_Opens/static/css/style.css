@@ -279,7 +279,7 @@ body{
 .forr{
   width: 100%;
 }
-.textinput{
+input{
   border: 1px solid silver !important;
   border-radius: 5px;
   box-sizing: border-box;
@@ -289,13 +289,8 @@ body{
   width: 100%;
   margin-bottom: 10px;
 }
-
 .control-label{
   font-size: 17px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.navbar{
-  background-color: #00ABB3;
 }
 

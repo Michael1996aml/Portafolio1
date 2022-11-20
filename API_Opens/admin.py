@@ -1,9 +1,8 @@
 from django.contrib import admin
-from .models import Email,Plantilla,Abogado,Solicitud,Documento,Cliente,Bitacora_solicitud,Bitacora_usuario,Perfil
+from .models import Email,Plantilla,Abogado,Solicitud,Documento,Cliente,Bitacora_solicitud,Bitacora_usuario
 
 # Register your models here.
 
-admin.site.register(Perfil)
 admin.site.register(Email)
 admin.site.register(Plantilla)
 admin.site.register(Abogado)

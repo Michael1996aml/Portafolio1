@@ -17,21 +17,22 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg p-3">
+  <nav class="navbar navbar-expand-lg p-3 bg-dark navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">RALE</a>
-      <h6 class="text-white">{{request.user.username}}</h6>
+      <a class="navbar-brand" href="">RALE</a>
+      <h4 class="text-warning">{{request.user.username}}</h4>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav text-center">
+      <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+        <div class="navbar-nav text-center ml-auto">
           {% if user.is_anonymous %}
+          <a class="nav-link" href="/">Inicio</a>
           <a class="nav-link" href="/signup/">Registrarse</a>
           {% else %}
             <a class="nav-link active" aria-current="page" href="/ahome/">Home</a>
-            <a class="nav-link" href="{% url 'modificarabogado' %}">Editar perfil</a>
+            <a class="nav-link" href="{% url 'modificarabogado' request.user.id %}">Editar perfil</a>
             <a class="nav-link" href="/signout/">Logout</a>
           {% endif %}
           
@@ -88,7 +89,7 @@
 <script>
           Swal.fire({
             text:"{{m}}",
-            icon:"success"
+            icon:""
           })
 </script>
 {% endfor %}

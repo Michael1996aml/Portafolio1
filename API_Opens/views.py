@@ -13,7 +13,7 @@ from rest_framework import serializers, views, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.decorators import permission_required
-
+from django.views.generic import TemplateView
 from .forms import agregarcliFrom, registrarForm, agregaraboFrom
 from .models import *
 from .serializers import *
@@ -83,18 +83,20 @@ def signup(request):
                 user = User.objects.create_user(
                     request.POST["username"],
                     password=request.POST["password1"],
-                    first_name=request.POST['first_name'],
-                    last_name=request.POST['last_name'],
+                    # first_name=request.POST['first_name'],
+                    # last_name=request.POST['last_name'],
                     email=request.POST['email'])
                 group = Group.objects.get(name='cliente')
                 user.groups.add(group)
                 user.save()
-                login(request, user)
-                user = request.user
-                if user.groups.filter(name='cliente').exists():
-                    return redirect(to='hola')
-                else:
-                    return redirect(to='ahome')
+                messages.success(request, "Cliente Agregado Correctamente")
+                # login(request, user)
+                return redirect(to='ahome')
+                # user = request.user
+                # if user.groups.filter(name='abogado').exists():
+                #     return redirect(to='ahome')
+                # else:
+                #     return redirect(to='hola')
             except IntegrityError:
                 return render(request, 'signup.html', {"form": registrarForm, "error": "Usuario ya existe."})
 
@@ -110,18 +112,18 @@ def signup2(request):
                 user = User.objects.create_user(
                     request.POST["username"],
                     password=request.POST["password1"],
-                    first_name=request.POST['first_name'],
-                    last_name=request.POST['last_name'],
+                    # first_name=request.POST['first_name'],
+                    # last_name=request.POST['last_name'],
                     email=request.POST['email'])
                 group = Group.objects.get(name='abogado')
                 user.groups.add(group)
                 user.save()
                 login(request, user)
-                user = request.user
-                if user.groups.filter(name='abogado').exists():
-                    return redirect(to='ahome')
-                else:
-                    return redirect(to='hola')
+                # user = request.user
+                # if user.groups.filter(name='abogado').exists():
+                #     return redirect(to='ahome')
+                # else:
+                #     return redirect(to='hola')
             except IntegrityError:
                 return render(request, 'signup2.html', {"form": registrarForm, "error": "Usuario ya existe."})
 
@@ -133,7 +135,6 @@ def signout(request):
     return redirect(to='signin')
 
 @login_required
-# @permission_required(user.view_user)
 def ahome(request):
     clientes = User.objects.filter(groups=1)
     data = {
@@ -179,9 +180,11 @@ def perfilcli(request, username=None):
 
 
 @login_required
-def modificarcliente(request):
+def modificarcliente(request,id):
+    cliente= get_object_or_404(Cliente, id=id)
+    data = {'cform':agregarcliFrom(instance=cliente)}
     if request.method == 'POST':
-        cform = agregarcliFrom(request.POST, request.FILES, instance=request.user.cliente)
+        cform = agregarcliFrom(data=request.POST, files=request.FILES, instance=cliente)
         if cform.is_valid():
             cform.save()
             messages.success(request, "Perfil modificado Correctamente")
@@ -191,15 +194,16 @@ def modificarcliente(request):
             else:
                 return redirect(to='ahome')
     else:
-        cform = agregarcliFrom(instance=request.user)
-    data = {'cform':cform}    
+        cform = agregarcliFrom(instance=cliente)
     return render(request, 'modificarperfil.html',data)
 
 
 @login_required
-def modificarabogado(request):
+def modificarabogado(request, id):
+    abogado= get_object_or_404(Abogado, id=id)
+    data = {'aform':agregaraboFrom(instance=abogado)}
     if request.method == 'POST':
-        aform = agregaraboFrom(request.POST, request.FILES, instance=request.user.abogado)
+        aform = agregaraboFrom(data=request.POST, files=request.FILES, instance=abogado)
         if aform.is_valid():
             aform.save()
             messages.success(request, "Perfil modificado Correctamente")
@@ -209,8 +213,7 @@ def modificarabogado(request):
             else:
                 return redirect(to='ahome')
     else:
-        aform = agregaraboFrom(instance=request.user)
-    data = {'aform':aform}
+        aform = agregaraboFrom(instance=abogado)
     return render(request, 'modificarperfila.html',data)
 
 # @login_required
@@ -264,6 +267,8 @@ def eliminardoc(request,id):
     return redirect(to='cargarDoc')
 
 
+
+
 # @login_required
 # def documentoscli(request):
 #     user = request.user
@@ -273,10 +278,16 @@ def eliminardoc(request,id):
 def documentoscli(request, username):
     current_user = request.user
     if username and username != current_user.username:
-        user = Documento.objects.get(user=username)
-        print(user)
+            try:
+                Documento.objects.get(user=username)
+                user=Documento.objects.get(user=username)
+            except:
+                messages.error(request, "El usuario no ha Subido archivos")
+                return redirect(to='ahome')
     else:
-        user = current_user
+        current_user = request.user
     return render(request, 'documentoscli.html', {'user': user})
 
     
+def error404view(request):
+    return render(request, 'error404view.html')

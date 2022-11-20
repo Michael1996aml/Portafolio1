@@ -7,39 +7,48 @@ rel="stylesheet"
 href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
 />
 <link rel="stylesheet" href="{% static 'css/style.css'%}" />
-<div class="contenedor2">
-
-  <div class="head_config_usuario">
-    <div class="titulo"></div>
-        <h2>Configuracion</h2><h4 class="text-info">Clientes</h4>
-    <div class="mt-5">
-        <button class="btn btn-success">Agregar +</button>
+<div class="row">
+    <div class="col-12 col-md-10 offset-md-1">
+        <div class="card mt-5">
+            <div class="card-body p-5 sombra">
+                <div class="titulo"></div>
+                    <h2>Configuracion</h2><h4 class="text-warning">Clientes</h4>
+                <div class="mt-5">
+                    <a class="btn btn-success" href="{% url 'signup' %}">Agregar +</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="tabla table-responsive">
-    <table class="table table-hover table-sm ">
-        <tr>
-            <th>Usuario</th>
-            <th>Nombre Completo</th>
-            <th>Fono</th>
-            <th>Direccion</th>
-            <th>Email</th>
-        </tr>
-        {% for c in clientes %}
-        <tr>
-            <td>{{c.username}}</td>
-            <td class="text-capitalize">{{c.cliente.nombre_cliente}} {{c.cliente.apellido_cliente}}</td>
-            <td>{{c.cliente.fono_cliente}}</td>
-            <td class="text-capitalize">{{c.cliente.direccion_cliente}}</td>
-            <td>{{c.email}}</td>
-            <td>
-                <a href="{% url 'perfilcli' c.username %}" class="btn btn-warning">Ver</a>
-            </td>
-        </tr>
-        {% endfor %}
-
-      </table>
+<div class="row">
+    <div class="col-12 col-md-10 offset-md-1">
+        <div class="card mt-5">
+            <div class="card-body p-5 sombra table-responsive">
+                    <table class="table table-hover table-sm">
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Nombre Completo</th>
+                            <th>Fono</th>
+                            <th>Direccion</th>
+                            <th>Email</th>
+                            <th>Opciones</th>
+                        </tr>
+                        {% for c in clientes %}
+                        <tr>
+                            <td>{{c.username}}</td>
+                            <td class="text-capitalize">{{c.cliente.nombre_cliente}} {{c.cliente.apellido_cliente}}</td>
+                            <td>{{c.cliente.fono_cliente}}</td>
+                            <td class="text-capitalize">{{c.cliente.direccion_cliente}}</td>
+                            <td>{{c.email}}</td>
+                            <td>
+                                <a href="{% url 'perfilcli' c.username %}" class="btn btn-warning">Ver</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                
+                      </table>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-
 {% endblock %}

@@ -8,10 +8,16 @@
         <div class="card">
             <div class="card-body">
                 <h2 class="mb-4">Formulario de Registro Cliente</h2>
+                <hr>
                 {{error}}
                 <form action="" method="POST" enctype="multipart/form-data" class="forr" >
                     {% csrf_token %}
-                    {{form | crispy}}
+                    <!-- <input type="text" class="form-control" placeholder="Nombre" aria-describedby="basic-addon1" id="id_first_name" name="first_name" required> -->
+                    <!-- <input type="text" class="form-control mt-3" placeholder="Apellido" aria-describedby="basic-addon1" id="id_last_name" name="last_name" required> -->
+                    <input type="text" class="form-control mt-3" placeholder="Usuario" aria-describedby="basic-addon1" id="id_username"name="username"  required>
+                    <input type="email" class="form-control mt-3" placeholder="Email" aria-describedby="basic-addon1" id="id_email" name="email" required>
+                    <input type="password" class="form-control mt-3" placeholder="Contraseña" aria-describedby="basic-addon1" id="id_password1" name="password1" required>
+                    <input type="password" class="form-control mt-3" placeholder="Repita Contraseña" aria-describedby="basic-addon1" id="id_password2" name="password2" required>
                     <div class="d-flex justify-content-end mt-2">
                         <button type="submit" class="btn btn-success">Registrar</button>
                     </div>

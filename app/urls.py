@@ -9,6 +9,7 @@ from drf_yasg import openapi
 from API_Opens import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import handler404, handler500
 
 
 router = routers.DefaultRouter()
@@ -52,8 +53,8 @@ urlpatterns = [
     #!PERFIL
     path('miperfil/<str:username>/',views.miperfil, name='miperfil'),
     path('perfilcli/<str:username>/',views.perfilcli, name='perfilcli'),
-    path('modificarperfilc/',views.modificarcliente, name='modificarcliente'),
-    path('modificarperfila/',views.modificarabogado, name='modificarabogado'),
+    path('modificarperfilc/<id>',views.modificarcliente, name='modificarcliente'),
+    path('modificarperfila/<id>',views.modificarabogado, name='modificarabogado'),
     #!CLIENTE
     path('hola/',views.hola, name='hola'),
    #!Documentos
@@ -62,4 +63,6 @@ urlpatterns = [
     path('documentoscli/<str:username>',views.documentoscli, name='documentoscli'),
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+handler500 = "API_Opens.views.error404view"
 

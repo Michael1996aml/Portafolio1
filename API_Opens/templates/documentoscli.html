@@ -18,9 +18,11 @@
                         <tr>
                             <td>{{ user.titulo }}</td>
                             <td>{{ user.fecha_documento }}</td>
+                            {% if user.documento %}
                             <td>
                                 <a href="{{ user.documento.url}}" class="btn btn-warning btn-sm" download >Descargar</a>
                             </td>
+                            {% endif %}
                         </tr>
                 </table>
             </div>
